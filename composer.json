@@ -27,7 +27,7 @@
         "nesbot/carbon": "^2.53.1",
         "ozdemirburak/iris": "^3.1",
         "saloonphp/laravel-plugin": "^2.0",
-        "saloonphp/rate-limit-plugin": "^0.1.2",
+        "saloonphp/rate-limit-plugin": "^1.0.0",
         "saloonphp/saloon": "^2.0",
         "spatie/laravel-data": "^3.1"
     },
