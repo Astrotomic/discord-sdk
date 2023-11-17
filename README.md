@@ -1,1 +1,1 @@
-# discord-sdk
+# Discord SDK

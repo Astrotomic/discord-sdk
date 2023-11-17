@@ -1,0 +1,83 @@
+{
+    "name": "astrotomic/discord-sdk",
+    "description": "Interact with the Discord HTTP API.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Witkowski",
+            "email": "gummibeer@astrotomic.info",
+            "homepage": "https://astrotomic.info",
+            "role": "Developer"
+        }
+    ],
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/Gummibeer"
+        },
+        {
+            "type": "other",
+            "url": "https://forest.astrotomic.info"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-json": "*",
+        "illuminate/support": "^9.0 || ^10.0",
+        "nesbot/carbon": "^2.53.1",
+        "ozdemirburak/iris": "^3.1",
+        "saloonphp/laravel-plugin": "^2.0",
+        "saloonphp/rate-limit-plugin": "^0.1.2",
+        "saloonphp/saloon": "^2.0",
+        "spatie/laravel-data": "^3.1"
+    },
+    "require-dev": {
+        "astrotomic/phpunit-assertions": "^0.10.0",
+        "laravel/pint": "^1.2",
+        "orchestra/testbench": "^7.0 || ^8.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Astrotomic\\DiscordSdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "composer-normalize": {
+            "indent-size": 4,
+            "indent-style": "space"
+        },
+        "laravel": {
+            "providers": [
+                "Astrotomic\\DiscordSdk\\DiscordSdkServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@composer normalize --ansi --no-interaction --quiet",
+            "@composer thanks --ansi --no-interaction --quiet",
+            "@php vendor/bin/testbench package:discover --ansi"
+        ],
+        "fix": "@php vendor/bin/pint",
+        "normalize": "echo 'composer global require ergebnis/composer-normalize'",
+        "phpstan": "@php vendor/bin/phpstan analyse --memory-limit=2G",
+        "test": "@php -d memory_limit=-1 vendor/bin/pest",
+        "test-coverage": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/pest --coverage-html=.coverage",
+        "thanks": "echo 'composer global require symfony/thanks'"
+    }
+}
