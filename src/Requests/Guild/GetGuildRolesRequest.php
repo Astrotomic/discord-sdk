@@ -5,17 +5,17 @@ namespace Astrotomic\DiscordSdk\Requests\Guild;
 use Astrotomic\DiscordSdk\Objects\Role;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Enumerable;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Traits\Request\CastDtoFromResponse;
+use Saloon\Http\Response;
+use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 /**
  * @link https://discord.com/developers/docs/resources/guild#get-guild-roles
  */
 class GetGuildRolesRequest extends Request
 {
-    use CastDtoFromResponse;
+    use CreatesDtoFromResponse;
 
     protected Method $method = Method::GET;
 

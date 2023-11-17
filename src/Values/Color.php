@@ -7,7 +7,7 @@ use JsonSerializable;
 use OzdemirBurak\Iris\Color\Hex;
 use Stringable;
 
-class Color implements Stringable, JsonSerializable, Jsonable
+class Color implements Jsonable, JsonSerializable, Stringable
 {
     public readonly int $color;
 

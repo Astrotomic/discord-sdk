@@ -4,6 +4,7 @@ namespace Astrotomic\DiscordSdk;
 
 use Astrotomic\DiscordSdk\Resources\ChannelResource;
 use Astrotomic\DiscordSdk\Resources\GuildResource;
+use Astrotomic\DiscordSdk\Resources\UserResource;
 use Illuminate\Support\Facades\Cache;
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Connector;
@@ -69,5 +70,10 @@ class DiscordConnector extends Connector
     public function channel(): ChannelResource
     {
         return new ChannelResource($this);
+    }
+
+    public function user(): UserResource
+    {
+        return new UserResource($this);
     }
 }

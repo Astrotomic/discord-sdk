@@ -13,8 +13,9 @@ use Astrotomic\DiscordSdk\Requests\Guild\GetGuildMembersRequest;
 use Astrotomic\DiscordSdk\Requests\Guild\GetGuildRolesRequest;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Collection;
+use Saloon\Http\BaseResource;
 
-class GuildResource extends Resource
+class GuildResource extends BaseResource
 {
     /**
      * @return Collection<string, Ban>

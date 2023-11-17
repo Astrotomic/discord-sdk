@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use JsonSerializable;
 use Stringable;
 
-class Snowflake implements Stringable, JsonSerializable, Jsonable
+class Snowflake implements Jsonable, JsonSerializable, Stringable
 {
     public readonly int $snowflake;
 

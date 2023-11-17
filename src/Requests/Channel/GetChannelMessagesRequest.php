@@ -7,21 +7,21 @@ use Astrotomic\DiscordSdk\Queries\Channel\GetChannelMessagesQuery;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Enumerable;
 use Illuminate\Support\Facades\Cache;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
-use Saloon\Traits\Request\CastDtoFromResponse;
+use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 /**
  * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
  */
 class GetChannelMessagesRequest extends Request
 {
-    use CastDtoFromResponse;
+    use CreatesDtoFromResponse;
     use HasRateLimits;
 
     protected Method $method = Method::GET;

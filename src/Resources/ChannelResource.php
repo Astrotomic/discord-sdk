@@ -7,8 +7,9 @@ use Astrotomic\DiscordSdk\Queries\Channel\GetChannelMessagesQuery;
 use Astrotomic\DiscordSdk\Requests\Channel\GetChannelMessagesRequest;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Collection;
+use Saloon\Http\BaseResource;
 
-class ChannelResource extends Resource
+class ChannelResource extends BaseResource
 {
     /**
      * @return Collection<string, Message>
