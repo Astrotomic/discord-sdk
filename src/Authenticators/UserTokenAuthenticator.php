@@ -3,7 +3,7 @@
 namespace Astrotomic\DiscordSdk\Authenticators;
 
 use Saloon\Contracts\Authenticator;
-use Saloon\Contracts\PendingRequest;
+use Saloon\Http\PendingRequest;
 
 class UserTokenAuthenticator implements Authenticator
 {
