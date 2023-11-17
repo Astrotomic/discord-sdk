@@ -3,7 +3,7 @@
 namespace Astrotomic\DiscordSdk\Objects;
 
 use Astrotomic\DiscordSdk\Casts\CarbonInterfaceCast;
-use Astrotomic\DiscordSdk\Casts\StringableCast;
+use Astrotomic\DiscordSdk\Casts\ValueObjectCast;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Carbon\CarbonImmutable;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
@@ -17,9 +17,9 @@ use Spatie\LaravelData\DataCollection;
 class Message extends Data
 {
     public function __construct(
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly Snowflake $id,
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly Snowflake $channel_id,
         public readonly User $author,
         public readonly ?string $content,
@@ -38,12 +38,12 @@ class Message extends Data
         public readonly ?array $reactions, // ToDo
         public readonly null|int|string $nonce,
         public readonly bool $pinned,
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly ?Snowflake $webhook_id,
         public readonly int $type, // ToDo
         public readonly ?array $activity, // ToDo
         public readonly ?array $application, // ToDo
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly ?Snowflake $application_id, // ToDo
         public readonly ?array $message_reference, // ToDo
         public readonly int $flags, // ToDo

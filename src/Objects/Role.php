@@ -2,7 +2,7 @@
 
 namespace Astrotomic\DiscordSdk\Objects;
 
-use Astrotomic\DiscordSdk\Casts\StringableCast;
+use Astrotomic\DiscordSdk\Casts\ValueObjectCast;
 use Astrotomic\DiscordSdk\Values\Color;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -14,10 +14,10 @@ use Spatie\LaravelData\Data;
 class Role extends Data
 {
     public function __construct(
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly Snowflake $id,
         public readonly string $name,
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly Color $color,
         public readonly bool $hoist,
         public readonly ?string $icon,

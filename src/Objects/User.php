@@ -2,7 +2,8 @@
 
 namespace Astrotomic\DiscordSdk\Objects;
 
-use Astrotomic\DiscordSdk\Casts\StringableCast;
+use Astrotomic\DiscordSdk\Casts\ValueObjectCast;
+use Astrotomic\DiscordSdk\Enums\PremiumType;
 use Astrotomic\DiscordSdk\Values\Color;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -14,7 +15,7 @@ use Spatie\LaravelData\Data;
 class User extends Data
 {
     public function __construct(
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly Snowflake $id,
         public readonly string $username,
         public readonly string $discriminator,
@@ -24,13 +25,13 @@ class User extends Data
         public readonly ?bool $system,
         public readonly ?bool $mfa_enabled,
         public readonly ?string $banner,
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly ?Color $accent_color,
         public readonly ?string $locale,
         public readonly ?bool $verified,
         public readonly ?string $email,
         public readonly ?int $flags,
-        public readonly ?int $premium_type,
+        public readonly ?PremiumType $premium_type,
         public readonly ?int $public_flags,
         public readonly ?string $avatar_decoration,
     ) {

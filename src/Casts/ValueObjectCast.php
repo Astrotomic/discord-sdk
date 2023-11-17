@@ -7,7 +7,7 @@ use Spatie\LaravelData\Casts\Uncastable;
 use Spatie\LaravelData\Support\DataProperty;
 use Stringable;
 
-class StringableCast implements Cast
+class ValueObjectCast implements Cast
 {
     public function cast(DataProperty $property, mixed $value, array $context): Stringable|Uncastable
     {

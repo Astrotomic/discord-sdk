@@ -3,7 +3,7 @@
 namespace Astrotomic\DiscordSdk\Objects;
 
 use Astrotomic\DiscordSdk\Casts\CarbonInterfaceCast;
-use Astrotomic\DiscordSdk\Casts\StringableCast;
+use Astrotomic\DiscordSdk\Casts\ValueObjectCast;
 use Astrotomic\DiscordSdk\Enums\EmbedType;
 use Astrotomic\DiscordSdk\Structures\EmbedField;
 use Astrotomic\DiscordSdk\Structures\EmbedImage;
@@ -26,7 +26,7 @@ class Embed extends Data
         public readonly ?string $url,
         #[WithCast(CarbonInterfaceCast::class)]
         public readonly ?CarbonImmutable $timestamp,
-        #[WithCast(StringableCast::class)]
+        #[WithCast(ValueObjectCast::class)]
         public readonly ?Color $color,
         public readonly ?array $footer, // ToDo
         public readonly ?EmbedImage $image,
