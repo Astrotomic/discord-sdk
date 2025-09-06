@@ -3,14 +3,17 @@
 namespace Astrotomic\DiscordSdk\Resources;
 
 use Astrotomic\DiscordSdk\Objects\Ban;
+use Astrotomic\DiscordSdk\Objects\Channel;
 use Astrotomic\DiscordSdk\Objects\GuildMember;
 use Astrotomic\DiscordSdk\Objects\Role;
 use Astrotomic\DiscordSdk\Queries\Guild\GetGuildBansQuery;
 use Astrotomic\DiscordSdk\Queries\Guild\GetGuildMembersQuery;
+use Astrotomic\DiscordSdk\Requests\Guild\AddGuildMemberRequest;
 use Astrotomic\DiscordSdk\Requests\Guild\GetGuildBansRequest;
 use Astrotomic\DiscordSdk\Requests\Guild\GetGuildMemberRequest;
 use Astrotomic\DiscordSdk\Requests\Guild\GetGuildMembersRequest;
 use Astrotomic\DiscordSdk\Requests\Guild\GetGuildRolesRequest;
+use Astrotomic\DiscordSdk\Requests\Guild\ListActiveGuildThreadsRequest;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Collection;
 use Saloon\Http\BaseResource;
@@ -22,7 +25,7 @@ class GuildResource extends BaseResource
      */
     public function getGuildBans(
         Snowflake $guildId,
-        GetGuildBansQuery $query = new GetGuildBansQuery()
+        GetGuildBansQuery $query = new GetGuildBansQuery
     ): Collection {
         return $this->connector->send(
             new GetGuildBansRequest(
@@ -49,7 +52,7 @@ class GuildResource extends BaseResource
      */
     public function getGuildMembers(
         Snowflake $guildId,
-        GetGuildMembersQuery $query = new GetGuildMembersQuery()
+        GetGuildMembersQuery $query = new GetGuildMembersQuery
     ): Collection {
         return $this->connector->send(
             new GetGuildMembersRequest(
@@ -67,6 +70,33 @@ class GuildResource extends BaseResource
             new GetGuildMemberRequest(
                 guildId: $guildId,
                 userId: $userId
+            )
+        )->dtoOrFail();
+    }
+
+    public function addGuildMember(
+        Snowflake $guildId,
+        Snowflake $userId,
+        string $accessToken,
+    ): bool {
+        return $this->connector->send(
+            new AddGuildMemberRequest(
+                guildId: $guildId,
+                userId: $userId,
+                accessToken: $accessToken,
+            )
+        )->dtoOrFail();
+    }
+
+    /**
+     * @return Collection<string, Channel>
+     */
+    public function listActiveGuildThreads(
+        Snowflake $guildId,
+    ): Collection {
+        return $this->connector->send(
+            new ListActiveGuildThreadsRequest(
+                guildId: $guildId,
             )
         )->dtoOrFail();
     }

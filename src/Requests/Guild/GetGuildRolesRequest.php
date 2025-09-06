@@ -4,7 +4,7 @@ namespace Astrotomic\DiscordSdk\Requests\Guild;
 
 use Astrotomic\DiscordSdk\Objects\Role;
 use Astrotomic\DiscordSdk\Values\Snowflake;
-use Illuminate\Support\Enumerable;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -21,8 +21,7 @@ class GetGuildRolesRequest extends Request
 
     public function __construct(
         public readonly Snowflake $guildId
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -30,12 +29,11 @@ class GetGuildRolesRequest extends Request
     }
 
     /**
-     * @return Enumerable<string, Role>
+     * @return Collection<string, Role>
      */
-    public function createDtoFromResponse(Response $response): Enumerable
+    public function createDtoFromResponse(Response $response): Collection
     {
-        return Role::collection($response->collect())
-            ->toCollection()
+        return collect(Role::collect($response->collect()))
             ->keyBy('id');
     }
 }

@@ -5,7 +5,7 @@ namespace Astrotomic\DiscordSdk\Requests\Channel;
 use Astrotomic\DiscordSdk\Objects\Message;
 use Astrotomic\DiscordSdk\Queries\Channel\GetChannelMessagesQuery;
 use Astrotomic\DiscordSdk\Values\Snowflake;
-use Illuminate\Support\Enumerable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -51,12 +51,11 @@ class GetChannelMessagesRequest extends Request
     }
 
     /**
-     * @return Enumerable<string, Message>
+     * @return Collection<string, Message>
      */
-    public function createDtoFromResponse(Response $response): Enumerable
+    public function createDtoFromResponse(Response $response): Collection
     {
-        return Message::collection($response->collect())
-            ->toCollection()
+        return collect(Message::collect($response->collect()))
             ->keyBy('id');
     }
 }

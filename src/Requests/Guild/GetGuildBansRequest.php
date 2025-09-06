@@ -5,7 +5,7 @@ namespace Astrotomic\DiscordSdk\Requests\Guild;
 use Astrotomic\DiscordSdk\Objects\Ban;
 use Astrotomic\DiscordSdk\Queries\Guild\GetGuildBansQuery;
 use Astrotomic\DiscordSdk\Values\Snowflake;
-use Illuminate\Support\Enumerable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -28,7 +28,7 @@ class GetGuildBansRequest extends Request
 
     public function __construct(
         public readonly Snowflake $guildId,
-        GetGuildBansQuery $query = new GetGuildBansQuery(),
+        GetGuildBansQuery $query = new GetGuildBansQuery,
     ) {
         $this->query = $query;
     }
@@ -51,12 +51,11 @@ class GetGuildBansRequest extends Request
     }
 
     /**
-     * @return Enumerable<string, Ban>
+     * @return Collection<string, Ban>
      */
-    public function createDtoFromResponse(Response $response): Enumerable
+    public function createDtoFromResponse(Response $response): Collection
     {
-        return Ban::collection($response->collect())
-            ->toCollection()
+        return collect(Ban::collect($response->collect()))
             ->keyBy('user.id');
     }
 }

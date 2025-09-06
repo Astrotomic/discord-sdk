@@ -10,8 +10,7 @@ class BotTokenAuthenticator implements Authenticator
     public function __construct(
 
         protected readonly string $token,
-    ) {
-    }
+    ) {}
 
     public function set(PendingRequest $pendingRequest): void
     {

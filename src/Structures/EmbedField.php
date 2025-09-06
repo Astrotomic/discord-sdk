@@ -13,6 +13,5 @@ class EmbedField extends Data
         public readonly string $name,
         public readonly string $value,
         public readonly ?bool $inline,
-    ) {
-    }
+    ) {}
 }

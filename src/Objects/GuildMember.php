@@ -28,6 +28,5 @@ class GuildMember extends Data
         public readonly ?string $permissions,
         #[WithCast(CarbonInterfaceCast::class)]
         public readonly ?CarbonImmutable $communication_disabled_until,
-    ) {
-    }
+    ) {}
 }

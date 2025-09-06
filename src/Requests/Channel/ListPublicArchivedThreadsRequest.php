@@ -1,9 +1,9 @@
 <?php
 
-namespace Astrotomic\DiscordSdk\Requests\Guild;
+namespace Astrotomic\DiscordSdk\Requests\Channel;
 
-use Astrotomic\DiscordSdk\Objects\GuildMember;
-use Astrotomic\DiscordSdk\Queries\Guild\GetGuildMembersQuery;
+use Astrotomic\DiscordSdk\Objects\Message;
+use Astrotomic\DiscordSdk\Queries\Channel\ListPublicArchivedThreadsQuery;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -17,9 +17,9 @@ use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 /**
- * @link https://discord.com/developers/docs/resources/guild#list-guild-members
+ * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
  */
-class GetGuildMembersRequest extends Request
+class ListPublicArchivedThreadsRequest extends Request
 {
     use CreatesDtoFromResponse;
     use HasRateLimits;
@@ -27,15 +27,15 @@ class GetGuildMembersRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        public readonly Snowflake $guildId,
-        GetGuildMembersQuery $query = new GetGuildMembersQuery,
+        public readonly Snowflake $channelId,
+        ListPublicArchivedThreadsQuery $query = new ListPublicArchivedThreadsQuery,
     ) {
         $this->query = $query;
     }
 
     public function resolveEndpoint(): string
     {
-        return "/guilds/{$this->guildId}/members";
+        return "/channels/{$this->channelId}/threads/archived/public";
     }
 
     protected function resolveRateLimitStore(): RateLimitStore
@@ -46,16 +46,15 @@ class GetGuildMembersRequest extends Request
     protected function resolveLimits(): array
     {
         return [
-            Limit::allow(10)->everySeconds(10)->sleep(),
+            Limit::allow(1)->everySeconds(5)->sleep(),
         ];
     }
 
     /**
-     * @return Collection<string, GuildMember>
+     * @return Collection<string, Message>
      */
     public function createDtoFromResponse(Response $response): Collection
     {
-        return collect(GuildMember::collect($response->collect()))
-            ->keyBy('user.id');
+        return $response->collect();
     }
 }

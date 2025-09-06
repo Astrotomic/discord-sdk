@@ -2,8 +2,8 @@
 
 namespace Astrotomic\DiscordSdk\Requests\Guild;
 
-use Astrotomic\DiscordSdk\Objects\GuildMember;
-use Astrotomic\DiscordSdk\Queries\Guild\GetGuildMembersQuery;
+use Astrotomic\DiscordSdk\Objects\Channel;
+use Astrotomic\DiscordSdk\Queries\Guild\GetGuildBansQuery;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -17,9 +17,9 @@ use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 /**
- * @link https://discord.com/developers/docs/resources/guild#list-guild-members
+ * @link https://discord.com/developers/docs/resources/guild#get-guild-bans
  */
-class GetGuildMembersRequest extends Request
+class ListActiveGuildThreadsRequest extends Request
 {
     use CreatesDtoFromResponse;
     use HasRateLimits;
@@ -28,14 +28,14 @@ class GetGuildMembersRequest extends Request
 
     public function __construct(
         public readonly Snowflake $guildId,
-        GetGuildMembersQuery $query = new GetGuildMembersQuery,
+        GetGuildBansQuery $query = new GetGuildBansQuery,
     ) {
         $this->query = $query;
     }
 
     public function resolveEndpoint(): string
     {
-        return "/guilds/{$this->guildId}/members";
+        return "/guilds/{$this->guildId}/threads/active";
     }
 
     protected function resolveRateLimitStore(): RateLimitStore
@@ -51,11 +51,11 @@ class GetGuildMembersRequest extends Request
     }
 
     /**
-     * @return Collection<string, GuildMember>
+     * @return Collection<string, Channel>
      */
     public function createDtoFromResponse(Response $response): Collection
     {
-        return collect(GuildMember::collect($response->collect()))
-            ->keyBy('user.id');
+        return collect(Channel::collect($response->collect('threads')))
+            ->keyBy('id');
     }
 }

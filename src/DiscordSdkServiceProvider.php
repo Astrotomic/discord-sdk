@@ -4,6 +4,4 @@ namespace Astrotomic\DiscordSdk;
 
 use Illuminate\Support\ServiceProvider;
 
-class DiscordSdkServiceProvider extends ServiceProvider
-{
-}
+class DiscordSdkServiceProvider extends ServiceProvider {}

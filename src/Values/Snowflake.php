@@ -30,10 +30,10 @@ class Snowflake implements Jsonable, JsonSerializable, Stringable
 
         $this->snowflake = $snowflake;
         $this->binary = str_pad(decbin($snowflake), 64, '0', STR_PAD_LEFT);
-        $this->timestamp = bindec(substr($this->binary, 0, 42)) + 1420070400000;
-        $this->worker = bindec(substr($this->binary, 42, 5));
-        $this->process = bindec(substr($this->binary, 47, 5));
-        $this->increment = bindec(substr($this->binary, 52, 12));
+        $this->timestamp = (int) bindec(substr($this->binary, 0, 42)) + 1420070400000;
+        $this->worker = (int) bindec(substr($this->binary, 42, 5));
+        $this->process = (int) bindec(substr($this->binary, 47, 5));
+        $this->increment = (int) bindec(substr($this->binary, 52, 12));
     }
 
     public function timestamp(): CarbonImmutable
@@ -41,7 +41,7 @@ class Snowflake implements Jsonable, JsonSerializable, Stringable
         return CarbonImmutable::createFromTimestampMsUTC($this->timestamp);
     }
 
-    public function jsonSerialize(): string
+    public function jsonSerialize(): int
     {
         return $this->snowflake;
     }
@@ -53,6 +53,6 @@ class Snowflake implements Jsonable, JsonSerializable, Stringable
 
     public function __toString(): string
     {
-        return $this->snowflake;
+        return (string) $this->snowflake;
     }
 }

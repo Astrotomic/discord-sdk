@@ -28,8 +28,7 @@ class GetUserRequest extends Request
 
     public function __construct(
         public readonly Snowflake $userId,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

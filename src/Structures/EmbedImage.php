@@ -14,6 +14,5 @@ class EmbedImage extends Data
         public readonly ?string $proxy_url,
         public readonly ?int $height,
         public readonly ?int $width,
-    ) {
-    }
+    ) {}
 }

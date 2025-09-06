@@ -1,10 +1,11 @@
 <?php
 
-namespace Astrotomic\DiscordSdk\Requests\Guild;
+namespace Astrotomic\DiscordSdk\Requests\Channel;
 
-use Astrotomic\DiscordSdk\Objects\GuildMember;
+use Astrotomic\DiscordSdk\Objects\Message;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Facades\Cache;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -12,26 +13,33 @@ use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
+use Saloon\Traits\Body\HasJsonBody;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 /**
- * @link https://discord.com/developers/docs/resources/guild#get-guild-member
+ * @link https://discord.com/developers/docs/resources/channel#create-message
  */
-class GetGuildMemberRequest extends Request
+class CreateMessageRequest extends Request implements HasBody
 {
     use CreatesDtoFromResponse;
+    use HasJsonBody;
     use HasRateLimits;
 
-    protected Method $method = Method::GET;
+    protected Method $method = Method::POST;
 
     public function __construct(
-        public readonly Snowflake $guildId,
-        public readonly Snowflake $userId,
+        public readonly Snowflake $channelId,
+        public readonly array $data,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return "/guilds/{$this->guildId}/members/{$this->userId}";
+        return "/channels/{$this->channelId}/messages";
+    }
+
+    protected function defaultBody(): array
+    {
+        return $this->data;
     }
 
     protected function resolveRateLimitStore(): RateLimitStore
@@ -46,8 +54,8 @@ class GetGuildMemberRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): GuildMember
+    public function createDtoFromResponse(Response $response): Message
     {
-        return GuildMember::from($response->json());
+        return Message::from($response->json());
     }
 }

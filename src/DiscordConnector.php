@@ -5,6 +5,7 @@ namespace Astrotomic\DiscordSdk;
 use Astrotomic\DiscordSdk\Resources\ChannelResource;
 use Astrotomic\DiscordSdk\Resources\GuildResource;
 use Astrotomic\DiscordSdk\Resources\UserResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Connector;
@@ -58,7 +59,9 @@ class DiscordConnector extends Connector
         }
 
         $limit->exceeded(
-            releaseInSeconds: RetryAfterHelper::parse($response->header('X-RateLimit-Reset-After')),
+            releaseInSeconds: RetryAfterHelper::parse(
+                retryAfter: collect(Arr::wrap($response->header('X-RateLimit-Reset-After')))->first()
+            ),
         );
     }
 

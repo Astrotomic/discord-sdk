@@ -10,12 +10,9 @@ abstract class Query extends ArrayStore implements Arrayable
 {
     public function __construct(array $data = [])
     {
-        $data = array_filter(
-            array: array_map(
-                callback: fn (mixed $value) => $value instanceof Stringable ? (string) $value : $value,
-                array: $data,
-            ),
-            callback: fn (mixed $value) => $value !== null
+        $data = array_map(
+            callback: fn (mixed $value) => $value instanceof Stringable ? (string) $value : $value,
+            array: $data,
         );
 
         parent::__construct($data);

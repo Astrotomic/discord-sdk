@@ -9,13 +9,13 @@ class GetGuildBansQuery extends Query
 {
     public function __construct(
         int $limit = 1000,
-        Snowflake $before = null,
-        Snowflake $after = null,
+        ?Snowflake $before = null,
+        ?Snowflake $after = null,
     ) {
-        parent::__construct([
+        parent::__construct(array_filter([
             'limit' => clamp(1, $limit, 1000),
             'before' => $before,
             'after' => $after,
-        ]);
+        ]));
     }
 }

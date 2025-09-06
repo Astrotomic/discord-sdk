@@ -38,6 +38,6 @@ class Color implements Jsonable, JsonSerializable, Stringable
 
     public function __toString(): string
     {
-        return $this->color;
+        return (string) $this->color;
     }
 }

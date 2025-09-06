@@ -1,8 +1,7 @@
 <?php
 
-namespace Astrotomic\DiscordSdk\Requests\Guild;
+namespace Astrotomic\DiscordSdk\Requests\Channel;
 
-use Astrotomic\DiscordSdk\Objects\GuildMember;
 use Astrotomic\DiscordSdk\Values\Snowflake;
 use Illuminate\Support\Facades\Cache;
 use Saloon\Enums\Method;
@@ -15,23 +14,24 @@ use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 /**
- * @link https://discord.com/developers/docs/resources/guild#get-guild-member
+ * @link https://discord.com/developers/docs/resources/channel#create-reaction
  */
-class GetGuildMemberRequest extends Request
+class CreateReactionRequest extends Request
 {
     use CreatesDtoFromResponse;
     use HasRateLimits;
 
-    protected Method $method = Method::GET;
+    protected Method $method = Method::PUT;
 
     public function __construct(
-        public readonly Snowflake $guildId,
-        public readonly Snowflake $userId,
+        public readonly Snowflake $channelId,
+        public readonly Snowflake $messageId,
+        public readonly string $emoji,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return "/guilds/{$this->guildId}/members/{$this->userId}";
+        return "/channels/{$this->channelId}/messages/{$this->messageId}/reactions/{$this->emoji}/@me";
     }
 
     protected function resolveRateLimitStore(): RateLimitStore
@@ -42,12 +42,12 @@ class GetGuildMemberRequest extends Request
     protected function resolveLimits(): array
     {
         return [
-            Limit::allow(5)->everySeconds(1)->sleep(),
+            Limit::allow(1)->everySeconds(1)->sleep(),
         ];
     }
 
-    public function createDtoFromResponse(Response $response): GuildMember
+    public function createDtoFromResponse(Response $response): bool
     {
-        return GuildMember::from($response->json());
+        return $response->successful();
     }
 }
