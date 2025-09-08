@@ -47,9 +47,6 @@ class GetUserRequest extends Request
         ];
     }
 
-    /**
-     * @return Enumerable<string, Ban>
-     */
     public function createDtoFromResponse(Response $response): User
     {
         return User::from($response->json());
